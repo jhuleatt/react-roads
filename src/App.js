@@ -1,26 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, Suspense } from 'react';
+import TermSelector from './TermSelector';
 
-function App() {
+const RoadList = React.lazy(() => import('./RoadList'));
+
+export default function App() {
+  const [term, setTerm] = useState('all');
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="overflow-hidden max-h-screen max-w-xl m-auto">
+      <TermSelector value={term} onChange={setTerm} />
+      <div className="overflow-scroll border-collapse h-full">
+        <Suspense fallback="loading bundles...">
+          <RoadList term={term} />
+        </Suspense>
+      </div>
     </div>
   );
 }
-
-export default App;
