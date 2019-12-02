@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import 'firebase/remote-config';
-import 'firebase/analytics';
+
+import App from './App';
 import './styles.css';
+
 import { FirebaseAppProvider } from 'reactfire';
 
 const firebaseConfig = {
@@ -20,22 +18,8 @@ const firebaseConfig = {
   measurementId: 'G-PCBCN7M3ZH'
 };
 
-if (firebase.apps.length === 0) {
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
-  firebase.remoteConfig().settings = {
-    minimumFetchIntervalMillis: 100000
-  };
-  firebase.remoteConfig().defaultConfig = {
-    vote_prompt: 'Vote'
-  };
-  firebase.remoteConfig().fetchAndActivate();
-}
-
-firebase.remoteConfig().fetch();
-
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <FirebaseAppProvider firebaseApp={firebase}>
+  <FirebaseAppProvider firebaseConfig={firebaseConfig}>
     <App />
   </FirebaseAppProvider>
 );
