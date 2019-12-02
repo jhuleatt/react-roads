@@ -7,19 +7,7 @@ import {
   useFirestoreCollectionData,
   AuthCheck
 } from 'reactfire';
-
-function Button({ disabled, onClick, prompt }) {
-  const border = disabled ? '' : 'border-2';
-  return (
-    <button
-      disabled={disabled}
-      onClick={onClick}
-      className={`flex-initial h-16 w-16 rounded-full text-blue-900 ${border}`}
-    >
-      {prompt}
-    </button>
-  );
-}
+import { Button, VoteSubmitted } from './display';
 
 function ActiveVoteButton({ className, roadId }) {
   const user = useUser();
@@ -45,21 +33,13 @@ function ActiveVoteButton({ className, roadId }) {
       });
   }, [remoteConfig]);
 
-  if (
-    existingVotes.reduce(
-      (prev, current) => prev || current.roadId === roadId,
-      false
-    )
-  ) {
-    return (
-      <div className="flex items-center justify-center w-16 h-16">
-        <span role="img" aria-label="vote submitted" className="text-green-700">
-          +1
-        </span>
-      </div>
-    );
-  } else if (!votePrompt) {
-    return null;
+  const hasVoted = existingVotes.reduce(
+    (prev, current) => prev || current.roadId === roadId,
+    false
+  );
+
+  if (hasVoted) {
+    return <VoteSubmitted />;
   }
 
   const saveVote = () => {

@@ -1,19 +1,41 @@
-import React, { useState, Suspense } from 'react';
-import TermSelector from './TermSelector';
+import React, { useState, useTransition, Suspense } from 'react';
+import {
+  AppContainer,
+  MainContents,
+  Loading,
+  BottomBar,
+  Select
+} from './display';
+import reactTerms from './terms.json';
 
+// Lazy Load
 const RoadList = React.lazy(() => import('./RoadList'));
+const MostPopularRoad = React.lazy(() => import('./MostPopularRoad'));
 
 export default function App() {
-  const [term, setTerm] = useState('all');
+  const [term, setTerm] = useState('suspense');
+  const [startTransition, isPending] = useTransition({
+    timeoutMs: 5200
+  });
 
   return (
-    <div className="overflow-hidden max-h-screen max-w-xl m-auto">
-      <TermSelector value={term} onChange={setTerm} />
-      <div className="overflow-scroll border-collapse h-full">
-        <Suspense fallback="loading bundles...">
+    <AppContainer>
+      <Select
+        value={term}
+        onChange={newTerm => startTransition(() => setTerm(newTerm))}
+        disabled={isPending}
+        values={reactTerms}
+      />
+      <MainContents>
+        <Suspense fallback={<Loading term={term} />}>
           <RoadList term={term} />
         </Suspense>
-      </div>
-    </div>
+      </MainContents>
+      <BottomBar>
+        <Suspense fallback={null}>
+          <MostPopularRoad />
+        </Suspense>
+      </BottomBar>
+    </AppContainer>
   );
 }

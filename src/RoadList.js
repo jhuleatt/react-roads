@@ -1,42 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import firebase from 'firebase/app';
+import React, { useEffect } from 'react';
+import { useAuth, useFirestore, useFirestoreCollectionData } from 'reactfire';
+import { NoRoadsFound, RoadListItem } from './display';
+import VoteButton from './VoteButton';
 
 export default function RoadList({ term }) {
-  const [isLoaded, setLoaded] = useState(false);
-  const [roads, setRoads] = useState([]);
+  const firestore = useFirestore();
+  let query = firestore().collection('roads');
+
+  if (term !== 'all') {
+    query = query.where('term', '==', term);
+  }
+
+  query = query.orderBy('name');
+
+  const roads = useFirestoreCollectionData(query, { idField: 'id' });
+
+  const auth = useAuth();
 
   useEffect(() => {
-    let query = firebase.firestore().collection('roads');
-
-    if (term !== 'all') {
-      query = query.where('term', '==', term);
+    if (auth().currentUser) {
+      return;
     }
 
-    query = query.orderBy('name').limit(20);
+    auth()
+      .signInAnonymously()
+      .then(() => console.log('signed in'))
+      .catch(e => console.error(e));
+  }, [auth]);
 
-    setLoaded(false);
-    return query.onSnapshot(snap => {
-      setRoads(
-        snap.docs.map(doc => ({
-          ...doc.data(),
-          id: doc.id
-        }))
-      );
-      setLoaded(true);
-    });
-  }, [term]);
-
-  if (!isLoaded) {
-    return <p>Loading...</p>;
+  if (roads.length === 0) {
+    return <NoRoadsFound term={term} />;
   }
 
   return (
-    <ul>
+    <>
       {roads.map(road => (
-        <li key={road.id}>
-          {road.name}, {road.state}
-        </li>
+        <RoadListItem
+          key={road.id}
+          road={road}
+          voteButton={<VoteButton roadId={road.id} />}
+        />
       ))}
-    </ul>
+    </>
   );
 }

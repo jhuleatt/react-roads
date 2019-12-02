@@ -6,8 +6,6 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/remote-config';
 import 'firebase/analytics';
-
-import AppConcurrent from './AppConcurrent';
 import './styles.css';
 import { FirebaseAppProvider } from 'reactfire';
 
@@ -28,20 +26,17 @@ if (firebase.apps.length === 0) {
   firebase.remoteConfig().settings = {
     minimumFetchIntervalMillis: 100000
   };
-  // firebase.remoteConfig().defaultConfig = {
-  //   welcome_message: 'Welcome'
-  // };
+  firebase.remoteConfig().defaultConfig = {
+    vote_prompt: 'Vote'
+  };
   firebase.remoteConfig().fetchAndActivate();
 }
 
 firebase.remoteConfig().fetch();
 
-// const AppToUse = App;
-const AppToUse = AppConcurrent;
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <FirebaseAppProvider firebaseApp={firebase}>
-    <AppToUse />
+    <App />
   </FirebaseAppProvider>
 );
 
