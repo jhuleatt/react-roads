@@ -1,28 +1,21 @@
+// this is what the app does without Firebase
+// 1. Start in Firebase console
+// 2. Copy Firebase config
+// 3. Have App component be totally blank (create from scratch)
+// 4. Show presentational components
+// 5. Create App component
+
+// Set S,M,L goal for live demo
+// remind that the pressure is on
+
 import React from 'react';
 import ReactDOM from 'react-dom';
+// will things break if i get rid of this?
 import * as serviceWorker from './serviceWorker';
-
-import App from './App';
 import './styles.css';
+import App from './App';
 
-import { FirebaseAppProvider } from 'reactfire';
-
-const firebaseConfig = {
-  apiKey: 'AIzaSyAukvAfJFqu8GArLqOk6I6Y2RJSsbcbj28',
-  authDomain: 'jeff-suspense-demo.firebaseapp.com',
-  databaseURL: 'https://jeff-suspense-demo.firebaseio.com',
-  projectId: 'jeff-suspense-demo',
-  storageBucket: 'jeff-suspense-demo.appspot.com',
-  messagingSenderId: '87986548732',
-  appId: '1:87986548732:web:3e0e59070191983a7dcc79',
-  measurementId: 'G-PCBCN7M3ZH'
-};
-
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <FirebaseAppProvider firebaseConfig={firebaseConfig}>
-    <App />
-  </FirebaseAppProvider>
-);
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

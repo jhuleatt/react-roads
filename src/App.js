@@ -1,41 +1,51 @@
-import React, { useState, useTransition, Suspense } from 'react';
+import React, { useState } from 'react';
+import { AppContainer, RoadListItem } from './display';
 import {
-  AppContainer,
-  MainContents,
-  Loading,
-  BottomBar,
-  Select
-} from './display';
-import reactTerms from './terms.json';
+  FirebaseAppProvider,
+  useFirestore,
+  useFirestoreCollectionData
+} from 'reactfire';
 
-// Lazy Load
-const RoadList = React.lazy(() => import('./RoadList'));
-const MostPopularRoad = React.lazy(() => import('./MostPopularRoad'));
+// load the list of roads (filtered by 1 type)
+// create container for app (just css)
+// how do i talk to database?
+// show what the console looks like
+// map through
+// add onClick to RoadListItem
+// after important steps: create-react-app build and deploy on firebase hosting
+const firebaseConfig = {
+  apiKey: 'AIzaSyAukvAfJFqu8GArLqOk6I6Y2RJSsbcbj28',
+  authDomain: 'jeff-suspense-demo.firebaseapp.com',
+  databaseURL: 'https://jeff-suspense-demo.firebaseio.com',
+  projectId: 'jeff-suspense-demo',
+  storageBucket: 'jeff-suspense-demo.appspot.com',
+  messagingSenderId: '87986548732',
+  appId: '1:87986548732:web:3e0e59070191983a7dcc79',
+  measurementId: 'G-PCBCN7M3ZH'
+};
 
-export default function App() {
-  const [term, setTerm] = useState('suspense');
-  const [startTransition, isPending] = useTransition({
-    timeoutMs: 5200
-  });
+function RoadList() {
+  const firestore = useFirestore();
+  const query = firestore().collection('roads');
+
+  // rename term to searchTerm
+  const roads = useFirestoreCollectionData(query);
 
   return (
-    <AppContainer>
-      <Select
-        value={term}
-        onChange={newTerm => startTransition(() => setTerm(newTerm))}
-        disabled={isPending}
-        values={reactTerms}
-      />
-      <MainContents>
-        <Suspense fallback={<Loading term={term} />}>
-          <RoadList term={term} />
-        </Suspense>
-      </MainContents>
-      <BottomBar>
-        <Suspense fallback={null}>
-          <MostPopularRoad />
-        </Suspense>
-      </BottomBar>
-    </AppContainer>
+    <>
+      {roads.map(road => (
+        <RoadListItem road={road} />
+      ))}
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <FirebaseAppProvider firebaseConfig={firebaseConfig}>
+      <AppContainer>
+        <RoadList />
+      </AppContainer>
+    </FirebaseAppProvider>
   );
 }

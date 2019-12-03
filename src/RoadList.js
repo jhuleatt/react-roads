@@ -1,5 +1,10 @@
 import React, { useEffect, Suspense } from 'react';
-import { useAuth, useFirestore, useFirestoreCollectionData } from 'reactfire';
+import {
+  useAuth,
+  useFirestore,
+  useFirestoreCollectionData,
+  AuthCheck
+} from 'reactfire';
 import { NoRoadsFound, RoadListItem } from './display';
 import VoteButton from './VoteButton';
 
@@ -39,9 +44,11 @@ export default function RoadList({ term }) {
           key={road.id}
           road={road}
           voteButton={
-            <Suspense fallback={null}>
-              <VoteButton roadId={road.id} />
-            </Suspense>
+            <AuthCheck fallback={null}>
+              <Suspense fallback={null}>
+                <VoteButton roadId={road.id} />
+              </Suspense>
+            </AuthCheck>
           }
         />
       ))}

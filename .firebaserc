@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "jeff-suspense-demo"
+    "default": "jeff-suspense-demo",
+    "prod": "react-roads"
   }
 }

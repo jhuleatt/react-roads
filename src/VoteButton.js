@@ -1,15 +1,11 @@
 import React from 'react';
 import { Button, VoteSubmitted } from './display';
-import {
-  useFirestore,
-  useUser,
-  useFirestoreCollectionData,
-  AuthCheck
-} from 'reactfire';
+import { useFirestore, useUser, useFirestoreCollectionData } from 'reactfire';
 
 const votePrompt = 'Vote';
 
-function VoteButton({ roadId }) {
+// TODO: LIVECODE THIS
+export default function VoteButton({ roadId }) {
   const user = useUser();
 
   const firestore = useFirestore();
@@ -58,12 +54,4 @@ function VoteButton({ roadId }) {
   };
 
   return <Button prompt={votePrompt} disabled={false} onClick={saveVote} />;
-}
-
-export default function VoteButtonWrapper({ roadId }) {
-  return (
-    <AuthCheck fallback={null}>
-      <VoteButton roadId={roadId} />
-    </AuthCheck>
-  );
 }
