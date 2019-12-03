@@ -10,14 +10,14 @@ import './styles.css';
 import { FirebaseAppProvider } from 'reactfire';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyAukvAfJFqu8GArLqOk6I6Y2RJSsbcbj28',
-  authDomain: 'jeff-suspense-demo.firebaseapp.com',
-  databaseURL: 'https://jeff-suspense-demo.firebaseio.com',
-  projectId: 'jeff-suspense-demo',
-  storageBucket: 'jeff-suspense-demo.appspot.com',
-  messagingSenderId: '87986548732',
-  appId: '1:87986548732:web:3e0e59070191983a7dcc79',
-  measurementId: 'G-PCBCN7M3ZH'
+  apiKey: 'AIzaSyDdns7n9w-fn7wOE2Ji2_KUf9W8sYY7ALc',
+  authDomain: 'react-roads.firebaseapp.com',
+  databaseURL: 'https://react-roads.firebaseio.com',
+  projectId: 'react-roads',
+  storageBucket: 'react-roads.appspot.com',
+  messagingSenderId: '316874420035',
+  appId: '1:316874420035:web:9c80cfdea5179203da49f6',
+  measurementId: 'G-XWBLKFD91K'
 };
 
 if (firebase.apps.length === 0) {
