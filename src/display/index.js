@@ -1,17 +1,18 @@
 import React from 'react';
+import VoteButton from '../VoteButton';
 
-export function AppContainer({ children }) {
+export function PageLayout({ children }) {
   return (
     <div className="overflow-hidden h-screen flex flex-col max-w-xl m-auto bg-white">
       <div className="px-4 py-2 bg-blue-900 text-blue-100 text-2xl">
         <h1>Search U.S. Roads for React terms</h1>
       </div>
-      {children}
+      <ListLayout>{children}</ListLayout>
     </div>
   );
 }
 
-export function MainContents({ children }) {
+export function ListLayout({ children }) {
   return (
     <div className="overflow-scroll border-collapse flex-1 shadow-inner">
       {children}
@@ -77,7 +78,7 @@ export function MostPopularRoadBlurb({ roadName, stateName, votes }) {
   );
 }
 
-export function RoadListItem({ voteButton, road }) {
+export function RoadListItem({ onVote, road }) {
   let votesBlurb;
 
   if (!road.votes) {
@@ -95,7 +96,7 @@ export function RoadListItem({ voteButton, road }) {
         <span className="flex-1 align-baseline">{road.state}</span>
         <span className="font-light flex-1 align-baseline">{votesBlurb}</span>
       </div>
-      {voteButton}
+      {onVote ? <VoteButton roadId={road.id} onVote={onVote} /> : null}
     </div>
   );
 }
