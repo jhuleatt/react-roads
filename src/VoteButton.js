@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, VoteSubmitted } from './display';
-import { useFirestore, useUser, useFirestoreCollectionData } from 'reactfire';
+import { Button } from './display';
 
 const votePrompt = 'Vote';
 
