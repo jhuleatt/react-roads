@@ -1,6 +1,7 @@
 # ⚛️🚗 React Roads
 
-ReactFire demo presented at React Day Berlin 2019 in the talk:
+[ReactFire](https://github.com/FirebaseExtended/reactfire) demo presented at
+React Day Berlin 2019 in the talk:
 [Modern React apps with Hooks, Suspense, Context, and Firebase](https://www.youtube.com/watch?v=Mi9aKDcpRYA)
 
 The list of roads is from the United States Census Bureau's US Roads
