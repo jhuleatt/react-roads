@@ -8,7 +8,7 @@ import {
 } from './display';
 import reactTerms from './terms.json';
 
-// Lazy Load
+// Lazy Load components
 const RoadList = React.lazy(() => import('./RoadList'));
 const MostPopularRoad = React.lazy(() => import('./MostPopularRoad'));
 
