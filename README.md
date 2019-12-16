@@ -2,7 +2,9 @@
 
 [ReactFire](https://github.com/FirebaseExtended/reactfire) demo presented at
 React Day Berlin 2019 in the talk:
-[**Modern React apps with Hooks, Suspense, Context, and Firebase**](https://www.youtube.com/watch?v=Mi9aKDcpRYA)
+[**Modern React apps with Hooks, Suspense, Context, and Firebase**](https://www.youtube.com/watch?v=Mi9aKDcpRYA).
+If you want to follow along with my livecoding, use the branch
+`livecode-starter`.
 
 View the live site at [react-roads.web.app](https://react-roads.web.app/)
 
