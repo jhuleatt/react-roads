@@ -1,0 +1,12 @@
+{
+  "name": "seed-data",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "firebase-admin": "^8.7.0"
+  }
+}
