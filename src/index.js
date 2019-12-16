@@ -8,18 +8,13 @@ import 'firebase/remote-config';
 import 'firebase/analytics';
 import './styles.css';
 import { FirebaseAppProvider } from 'reactfire';
+import firebaseConfig from './firebase-config';
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyDdns7n9w-fn7wOE2Ji2_KUf9W8sYY7ALc',
-  authDomain: 'react-roads.firebaseapp.com',
-  databaseURL: 'https://react-roads.firebaseio.com',
-  projectId: 'react-roads',
-  storageBucket: 'react-roads.appspot.com',
-  messagingSenderId: '316874420035',
-  appId: '1:316874420035:web:9c80cfdea5179203da49f6',
-  measurementId: 'G-XWBLKFD91K'
-};
-
+// The setup here is more complicated than usual because ReactFire doesn't
+// support Remote Config or Analytics yet.
+// We're working on it in these issues:
+// https://github.com/FirebaseExtended/reactfire/issues/176
+// https://github.com/FirebaseExtended/reactfire/issues/175
 if (firebase.apps.length === 0) {
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
