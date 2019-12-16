@@ -9,29 +9,59 @@ import {
 } from 'reactfire';
 import { Button, VoteSubmitted } from './display';
 
-function ActiveVoteButton({ className, roadId }) {
-  const user = useUser();
+function useRemoteConfigStringValue(key) {
   const remoteConfig = useRemoteConfig();
-  const [votePrompt, setVotePrompt] = useState(null);
-
-  const firestore = useFirestore();
-  const votesRef = firestore()
-    .collection('users')
-    .doc(user.uid)
-    .collection('votes');
-  const existingVotes = useFirestoreCollectionData(votesRef);
-  const analytics = useAnalytics();
+  const [value, setValue] = useState(null);
 
   useEffect(() => {
     remoteConfig()
       .ensureInitialized()
       .then(() => {
-        return remoteConfig().getValue('vote_prompt');
+        return remoteConfig().getValue(key);
       })
       .then(val => {
-        setVotePrompt(val.asString());
+        setValue(val.asString());
       });
-  }, [remoteConfig]);
+  }, [remoteConfig, key]);
+
+  return value;
+}
+
+function VoteButton({ roadId }) {
+  const firestore = useFirestore();
+  const analytics = useAnalytics();
+  const user = useUser();
+  const votePrompt = useRemoteConfigStringValue('vote_prompt');
+
+  const saveVote = async () => {
+    analytics().logEvent('road_vote', { vote_prompt: votePrompt });
+
+    const ref = firestore()
+      .collection('roads')
+      .doc(roadId);
+
+    const increment = firestore.FieldValue.increment(1);
+
+    await ref.update({ votes: increment });
+    await firestore()
+      .collection('users')
+      .doc(user.uid)
+      .collection('votes')
+      .add({ roadId });
+  };
+
+  return <Button prompt={votePrompt} disabled={false} onClick={saveVote} />;
+}
+
+function VoteIndicator({ roadId }) {
+  const user = useUser();
+  const firestore = useFirestore();
+  const votesRef = firestore()
+    .collection('users')
+    .doc(user.uid)
+    .collection('votes');
+
+  const existingVotes = useFirestoreCollectionData(votesRef);
 
   const hasVoted = existingVotes.reduce(
     (prev, current) => prev || current.roadId === roadId,
@@ -42,46 +72,14 @@ function ActiveVoteButton({ className, roadId }) {
     return <VoteSubmitted />;
   }
 
-  const saveVote = () => {
-    analytics().logEvent('road_vote', { vote_prompt: votePrompt });
-
-    const ref = firestore()
-      .collection('roads')
-      .doc(roadId);
-
-    firestore().runTransaction(transaction =>
-      transaction
-        .get(ref)
-        .then(roadDoc => {
-          if (!roadDoc.exists) {
-            throw new Error(`Road ${roadId} does not exist`);
-          }
-
-          const newVoteCount = roadDoc.data().votes
-            ? roadDoc.data().votes + 1
-            : 1;
-          return transaction.update(ref, { votes: newVoteCount });
-        })
-        .catch(e => {
-          console.log(e);
-        })
-    );
-
-    firestore()
-      .collection('users')
-      .doc(user.uid)
-      .collection('votes')
-      .add({ roadId });
-  };
-
-  return <Button prompt={votePrompt} disabled={false} onClick={saveVote} />;
+  return <VoteButton roadId={roadId} />;
 }
 
-export default function VoteButton({ roadId }) {
+export default function VoteIndicatorWrapper({ roadId }) {
   return (
     <Suspense fallback={null}>
       <AuthCheck fallback={null}>
-        <ActiveVoteButton roadId={roadId} />
+        <VoteIndicator roadId={roadId} />
       </AuthCheck>
     </Suspense>
   );
