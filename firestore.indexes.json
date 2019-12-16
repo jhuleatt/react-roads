@@ -1,0 +1,19 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "roads",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "term",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "name",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

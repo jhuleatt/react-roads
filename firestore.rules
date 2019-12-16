@@ -1,0 +1,20 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+  
+  	function signedIn() {
+    	return request.auth.uid != null;
+    }
+    
+    match /users/{user}/{document=**} {
+    	allow read, write: if signedIn() && request.auth.uid == user;
+    }
+    
+    match /roads/{road} {
+    	allow read: if true;
+      allow update: if signedIn() 
+      	&& exists(/databases/$(database)/documents/users/$(request.auth.uid)/votes/$(road)) == false
+        && (request.resource.data.votes == 1 || request.resource.data.votes == resource.data.votes + 1);
+    }
+  }
+}
