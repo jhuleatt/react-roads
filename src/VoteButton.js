@@ -1,37 +1,19 @@
-import React, { useEffect, useState, Suspense } from 'react';
+import React, { Suspense } from 'react';
 import {
   useFirestore,
   useAnalytics,
-  useRemoteConfig,
+  useRemoteConfigString,
   useUser,
   useFirestoreCollectionData,
   AuthCheck
 } from 'reactfire';
 import { Button, VoteSubmitted } from './display';
 
-function useRemoteConfigStringValue(key) {
-  const remoteConfig = useRemoteConfig();
-  const [value, setValue] = useState(null);
-
-  useEffect(() => {
-    remoteConfig()
-      .ensureInitialized()
-      .then(() => {
-        return remoteConfig().getValue(key);
-      })
-      .then(val => {
-        setValue(val.asString());
-      });
-  }, [remoteConfig, key]);
-
-  return value;
-}
-
 function VoteButton({ roadId }) {
   const firestore = useFirestore();
   const analytics = useAnalytics();
   const user = useUser();
-  const votePrompt = useRemoteConfigStringValue('vote_prompt');
+  const votePrompt = useRemoteConfigString('vote_prompt');
 
   const saveVote = async () => {
     analytics().logEvent('road_vote', { vote_prompt: votePrompt });

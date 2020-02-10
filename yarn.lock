@@ -9312,10 +9312,10 @@ react@^0.0.0-experimental-b53ea6ca0:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
 
-reactfire@^2.0.0-canary.1fce6b9:
-  version "2.0.0-canary.1fce6b9"
-  resolved "https://registry.yarnpkg.com/reactfire/-/reactfire-2.0.0-canary.1fce6b9.tgz#c3a90b0356cc5e297dc1a3a56cdbd440977594df"
-  integrity sha512-u8YKVLOH2nNEfy/2s9G4rvjOb50mCPuMCyMZEpw93lDRbmyG6oQdHXd4E+bi7+JaWpVGZzXineD1hU5LwgfEgg==
+reactfire@^2.0.0-canary.e2f1b1f:
+  version "2.0.0-canary.e2f1b1f"
+  resolved "https://registry.yarnpkg.com/reactfire/-/reactfire-2.0.0-canary.e2f1b1f.tgz#4d11f19ca33bbd2ec45fe0b6328a94dc423e7d73"
+  integrity sha512-tHQhBNoFjYgIx81cfHrdoqMPSqe3aCIC4xXHZjVlGfOq7je8I9lY6mskMEFBhVQkyDJq6JZO11HMUnIs0VmYFw==
   dependencies:
     rxfire "^3.6.3"
     rxjs "^6.4.0"
