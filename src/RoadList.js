@@ -4,8 +4,7 @@ import { NoRoadsFound, RoadListItem } from './display';
 import VoteButton from './VoteButton';
 
 export default function RoadList({ term }) {
-  const firestore = useFirestore();
-  let query = firestore().collection('roads');
+  let query = useFirestore().collection('roads');
 
   if (term !== 'all') {
     query = query.where('term', '==', term);
@@ -18,11 +17,11 @@ export default function RoadList({ term }) {
   const auth = useAuth();
 
   useEffect(() => {
-    if (auth().currentUser) {
+    if (auth.currentUser) {
       return;
     }
 
-    auth()
+    auth
       .signInAnonymously()
       .then(() => console.log('signed in'))
       .catch(e => console.error(e));

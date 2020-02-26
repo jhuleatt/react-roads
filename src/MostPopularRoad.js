@@ -3,8 +3,7 @@ import { useFirestore, useFirestoreCollectionData } from 'reactfire';
 import { MostPopularRoadBlurb } from './display';
 
 export default function MostPopularRoad() {
-  const firestore = useFirestore();
-  const mostPopularRoadRef = firestore()
+  const mostPopularRoadRef = useFirestore()
     .collection('roads')
     .orderBy('votes', 'desc')
     .limit(1);

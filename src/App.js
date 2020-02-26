@@ -16,20 +16,26 @@ import {
 } from 'reactfire';
 
 function preloadLibraries(firebaseApp) {
-  preloadAnalytics(firebaseApp);
-  preloadRemoteConfig(firebaseApp, remoteConfig => {
-    remoteConfig().settings = {
-      minimumFetchIntervalMillis: 10000,
-      fetchTimeoutMillis: 10000
-    };
-    remoteConfig().defaultConfig = {
-      vote_prompt: 'Vote'
-    };
-    return remoteConfig().fetchAndActivate();
+  preloadAnalytics({ firebaseApp });
+  preloadRemoteConfig({
+    firebaseApp,
+    setup: remoteConfig => {
+      remoteConfig().settings = {
+        minimumFetchIntervalMillis: 10000,
+        fetchTimeoutMillis: 10000
+      };
+      remoteConfig().defaultConfig = {
+        vote_prompt: 'Vote'
+      };
+      return remoteConfig().fetchAndActivate();
+    }
   });
-  preloadAuth(firebaseApp);
-  preloadFirestore(firebaseApp, firestore => {
-    return firestore().enablePersistence();
+  preloadAuth({ firebaseApp });
+  preloadFirestore({
+    firebaseApp,
+    setip: firestore => {
+      return firestore().enablePersistence();
+    }
   });
 }
 

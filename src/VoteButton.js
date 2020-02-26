@@ -10,22 +10,21 @@ import {
 import { Button, VoteSubmitted } from './display';
 
 function VoteButton({ roadId }) {
-  const firestore = useFirestore();
+  const { FieldValue } = useFirestore;
+  const db = useFirestore();
   const analytics = useAnalytics();
   const user = useUser();
   const votePrompt = useRemoteConfigString('vote_prompt');
 
   const saveVote = async () => {
-    analytics().logEvent('road_vote', { vote_prompt: votePrompt });
+    analytics.logEvent('road_vote', { vote_prompt: votePrompt });
 
-    const ref = firestore()
-      .collection('roads')
-      .doc(roadId);
+    const ref = db.collection('roads').doc(roadId);
 
-    const increment = firestore.FieldValue.increment(1);
+    const increment = FieldValue.increment(1);
 
     await ref.update({ votes: increment });
-    await firestore()
+    await db
       .collection('users')
       .doc(user.uid)
       .collection('votes')
@@ -37,8 +36,7 @@ function VoteButton({ roadId }) {
 
 function VoteIndicator({ roadId }) {
   const user = useUser();
-  const firestore = useFirestore();
-  const votesRef = firestore()
+  const votesRef = useFirestore()
     .collection('users')
     .doc(user.uid)
     .collection('votes');

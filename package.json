@@ -5,14 +5,15 @@
   "repository": "github:jhuleatt/react-roads",
   "private": true,
   "dependencies": {
-    "firebase": "^7.4.0",
-    "react": "^0.0.0-experimental-241c4467e",
-    "react-dom": "^0.0.0-experimental-241c4467e",
-    "react-scripts": "3.2.0",
-    "reactfire": "^2.0.0-canary.e2f1b1f"
+    "firebase": "^7.9.1",
+    "react": "^0.0.0-experimental-d28bd2994",
+    "react-dom": "^0.0.0-experimental-d28bd2994",
+    "react-scripts": "^3.4.0",
+    "reactfire": "^2.0.0-rc.3"
   },
   "scripts": {
     "start": "react-scripts start",
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -39,6 +40,7 @@
     "@fullhuman/postcss-purgecss": "^1.3.0",
     "autoprefixer": "^9.7.2",
     "postcss-cli": "^6.1.3",
+    "source-map-explorer": "^2.3.1",
     "tailwindcss": "^1.1.3"
   }
 }
