@@ -23,5 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 src/firebase-config.js
 .firebaserc
-.firebase/*
+/.firebase
 src/styles.css
