@@ -9150,10 +9150,10 @@ react@^0.0.0-experimental-d28bd2994:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
 
-reactfire@^2.0.0-rc.3:
-  version "2.0.0-rc.3"
-  resolved "https://registry.yarnpkg.com/reactfire/-/reactfire-2.0.0-rc.3.tgz#f404a137283b40f57112d72a9562f90c1b50b8f5"
-  integrity sha512-1YpYmzJkKNnbISWSKRD0sTkjvp0xb1zd73Q86/2qPH1gvmWpSjKbMJBXry6u3Fh5+pf15VhJZB6Y9de3yV+Uag==
+reactfire@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/reactfire/-/reactfire-2.0.1.tgz#5f0ee94cc0ee9d7d894e9727578e148ee5ac053b"
+  integrity sha512-uK89B4zCmicbgqtdkzY7SWqKOn1altdu+qeWQyFRDGUhxTB24F3jq44zusYcWUe1ftPmYh+gJbiH51dgfBK9Eg==
   dependencies:
     rxfire "^3.6.3"
     rxjs "^6.4.0"
