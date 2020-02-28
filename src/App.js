@@ -1,19 +1,20 @@
-import React, { useState, useTransition, Suspense, useEffect } from 'react';
+import React, { useEffect, useState, useTransition } from 'react';
+import {
+  preloadAnalytics,
+  preloadAuth,
+  preloadFirestore,
+  preloadRemoteConfig,
+  SuspenseWithPerf,
+  useFirebaseApp
+} from 'reactfire';
 import {
   AppContainer,
-  MainContents,
-  Loading,
   BottomBar,
+  Loading,
+  MainContents,
   Select
 } from './display';
 import reactTerms from './terms.json';
-import {
-  preloadAnalytics,
-  preloadFirestore,
-  preloadAuth,
-  preloadRemoteConfig,
-  useFirebaseApp
-} from 'reactfire';
 
 function preloadLibraries(firebaseApp) {
   preloadAnalytics({ firebaseApp });
@@ -60,14 +61,17 @@ export default function App() {
         values={reactTerms}
       />
       <MainContents>
-        <Suspense fallback={<Loading term={term} />}>
+        <SuspenseWithPerf
+          fallback={<Loading term={term} />}
+          traceId={'load-road-list'}
+        >
           <RoadList term={term} />
-        </Suspense>
+        </SuspenseWithPerf>
       </MainContents>
       <BottomBar>
-        <Suspense fallback={null}>
+        <SuspenseWithPerf fallback={null} traceId={'load-leaderboard'}>
           <MostPopularRoad />
-        </Suspense>
+        </SuspenseWithPerf>
       </BottomBar>
     </AppContainer>
   );

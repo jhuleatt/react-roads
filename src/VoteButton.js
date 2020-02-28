@@ -1,11 +1,12 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import {
-  useFirestore,
+  AuthCheck,
+  SuspenseWithPerf,
   useAnalytics,
-  useRemoteConfigString,
-  useUser,
+  useFirestore,
   useFirestoreCollectionData,
-  AuthCheck
+  useRemoteConfigString,
+  useUser
 } from 'reactfire';
 import { Button, VoteSubmitted } from './display';
 
@@ -57,10 +58,10 @@ function VoteIndicator({ roadId }) {
 
 export default function VoteIndicatorWrapper({ roadId }) {
   return (
-    <Suspense fallback={null}>
+    <SuspenseWithPerf fallback={null} traceId={'load-vote-indicator'}>
       <AuthCheck fallback={null}>
         <VoteIndicator roadId={roadId} />
       </AuthCheck>
-    </Suspense>
+    </SuspenseWithPerf>
   );
 }
